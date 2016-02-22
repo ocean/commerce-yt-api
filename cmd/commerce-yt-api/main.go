@@ -6,7 +6,7 @@ import (
 	"os"
 	// "fmt"
 	// "encoding/json"
-	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 	"io/ioutil"
 )
 
@@ -28,6 +28,15 @@ func main() {
 	}
 
 	router := gin.Default()
+
+  router.LoadHTMLGlob("templates/*")
+  router.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+      "title": "Hi there!",
+      "heading": "Welcome",
+      "content": "... to the API.",
+    })
+	})
 
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
