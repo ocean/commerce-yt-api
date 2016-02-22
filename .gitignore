@@ -1,1 +1,5 @@
+# Ignore the test binary
+commerce-yt-api
+
+# Ignore pesky examples which want building
 vendor/github.com/gin-gonic/gin/examples
