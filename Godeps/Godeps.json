@@ -1,5 +1,5 @@
 {
-	"ImportPath": "bitbucket.org/commerce-wa-ols/go-commerce-yt-api",
+	"ImportPath": "github.com/ocean/commerce-yt-api",
 	"GoVersion": "go1.5",
 	"Deps": [
 		{
