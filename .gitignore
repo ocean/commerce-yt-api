@@ -1,2 +1,3 @@
 # Ignore the test binary
 cmd/commerce-yt-api/commerce-yt-api
+./commerce-yt-api
