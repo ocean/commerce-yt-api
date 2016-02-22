@@ -102,8 +102,8 @@ func main() {
 
 		// fmt.Printf("%s", body)
 
-		var jsonContentType = []string{"application/json; charset=utf-8"}
-		writeContentType(c.Writer, jsonContentType)
+		var htmlContentType = []string{"text/html; charset=utf-8"}
+		writeContentType(c.Writer, htmlContentType)
 		var out string = string(body[:])
 		c.String(http.StatusOK, out)
 	})
