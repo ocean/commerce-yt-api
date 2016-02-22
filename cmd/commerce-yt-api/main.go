@@ -44,6 +44,70 @@ func main() {
 		})
 	})
 
+	// SCALD_YOUTUBE_API Search request
+	// https://www.googleapis.com/youtube/v3
+	// + /search?key=' . $api_key . '&q=' . $q . '&part=snippet&order=rating&type=video,playlist
+	router.GET("/search", func(c *gin.Context) {
+		key := c.Query("key")
+		q := c.Query("q")
+		suffix := "&part=snippet&order=rating&type=video,playlist"
+		resp, err := http.Get("http://nfwws.herokuapp.com/v1/s/" + suburb)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+
+		// fmt.Printf("%s", body)
+
+		var jsonContentType = []string{"application/json; charset=utf-8"}
+		writeContentType(c.Writer, jsonContentType)
+		var out string = string(body[:])
+		c.String(http.StatusOK, out)
+	})
+
+	// SCALD_YOUTUBE_API RSS Feed request
+	// https://www.googleapis.com/youtube/v3
+	// + /videos?id=' . $id . '&key=' . $api_key . '&part=snippet
+	router.GET("/videos", func(c *gin.Context) {
+		id := c.Query("id")
+		key := c.Query("key")
+		suffix := "&part=snippet"
+		resp, err := http.Get("http://nfwws.herokuapp.com/v1/s/" + suburb)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+
+		// fmt.Printf("%s", body)
+
+		var jsonContentType = []string{"application/json; charset=utf-8"}
+		writeContentType(c.Writer, jsonContentType)
+		var out string = string(body[:])
+		c.String(http.StatusOK, out)
+	})
+
+	// SCALD_YOUTUBE_WEB request
+	// https://www.youtube.com/watch
+	// + /watch?v=' . $id
+	router.GET("/watch", func(c *gin.Context) {
+		id := c.Query("v")
+		resp, err := http.Get("https://www.youtube.com/watch?v=" + id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+
+		// fmt.Printf("%s", body)
+
+		var jsonContentType = []string{"application/json; charset=utf-8"}
+		writeContentType(c.Writer, jsonContentType)
+		var out string = string(body[:])
+		c.String(http.StatusOK, out)
+	})
+
 	router.GET("/form-submissions", func(c *gin.Context) {
 		resp, err := http.Get("http://forms.commerce.wa.gov.au/api/forms/results?token=ZuesbwqGhQMTxTbytbj7qrBWR_E84lTCSYLiVL1yk8Q")
 		if err != nil {
