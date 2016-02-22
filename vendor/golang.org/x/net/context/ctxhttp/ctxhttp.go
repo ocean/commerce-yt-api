@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"strings"
 
-	"golang.org/x/net/context"
+	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/golang.org/x/net/context"
 )
 
 func nop() {}

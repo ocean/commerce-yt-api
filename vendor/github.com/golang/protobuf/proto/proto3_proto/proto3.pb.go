@@ -15,8 +15,8 @@ It has these top-level messages:
 */
 package proto3_proto
 
-import proto "github.com/golang/protobuf/proto"
-import testdata "github.com/golang/protobuf/proto/testdata"
+import proto "github.com/ocean/commerce-yt-api/Godeps/_workspace/src/github.com/golang/protobuf/proto"
+import testdata "github.com/ocean/commerce-yt-api/Godeps/_workspace/src/github.com/golang/protobuf/proto/testdata"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

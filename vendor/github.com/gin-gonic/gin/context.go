@@ -14,10 +14,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gin-gonic/gin/binding"
-	"github.com/gin-gonic/gin/render"
-	"github.com/manucorporat/sse"
-	"golang.org/x/net/context"
+	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/github.com/gin-gonic/gin/binding"
+	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/github.com/gin-gonic/gin/render"
+	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/github.com/manucorporat/sse"
+	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/golang.org/x/net/context"
 )
 
 // Content-Type MIME of the most common data formats

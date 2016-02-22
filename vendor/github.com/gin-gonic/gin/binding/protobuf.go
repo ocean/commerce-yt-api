@@ -5,7 +5,7 @@
 package binding
 
 import (
-	"github.com/golang/protobuf/proto"
+	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/github.com/golang/protobuf/proto"
 
 	"io/ioutil"
 	"net/http"

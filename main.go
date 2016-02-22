@@ -6,7 +6,7 @@ import (
 	"os"
 	// "fmt"
 	// "encoding/json"
-	"github.com/gin-gonic/gin"
+	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/github.com/gin-gonic/gin"
 	"io/ioutil"
 )
 
@@ -35,7 +35,7 @@ func main() {
 		})
 	})
 
-  router.GET("/form-submissions", func(c *gin.Context) {
+	router.GET("/form-submissions", func(c *gin.Context) {
 		resp, err := http.Get("http://forms.commerce.wa.gov.au/api/forms/results?token=ZuesbwqGhQMTxTbytbj7qrBWR_E84lTCSYLiVL1yk8Q")
 		if err != nil {
 			log.Fatal(err)
@@ -43,13 +43,10 @@ func main() {
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
 
-		// fmt.Printf("%s", body)
-
 		var jsonContentType = []string{"application/json; charset=utf-8"}
 		writeContentType(c.Writer, jsonContentType)
 		var out string = string(body[:])
 		c.String(http.StatusOK, out)
-    // c.JSON(http.StatusOK, body)
 	})
 
 	router.GET("/fuel/:suburb", func(c *gin.Context) {

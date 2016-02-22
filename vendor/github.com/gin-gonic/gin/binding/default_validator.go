@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"sync"
 
-	"gopkg.in/go-playground/validator.v8"
+	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/gopkg.in/go-playground/validator.v8"
 )
 
 type defaultValidator struct {

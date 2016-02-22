@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"gopkg.in/go-playground/validator.v8"
+	"github.com/ocean/commerce-yt-api/Godeps/_workspace/src/gopkg.in/go-playground/validator.v8"
 )
 
 // DbBackedUser User struct

@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"sync"
 
-	. "github.com/gin-gonic/gin"
+	. "github.com/ocean/commerce-yt-api/Godeps/_workspace/src/github.com/gin-gonic/gin"
 )
 
 var once sync.Once
