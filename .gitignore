@@ -3,3 +3,4 @@ commerce-yt-api
 
 # Ignore pesky examples which want building
 vendor/github.com/gin-gonic/gin/examples
+vendor/github.com/golang/protobuf/proto/proto3_proto/proto3.pb.go
