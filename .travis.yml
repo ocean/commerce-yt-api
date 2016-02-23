@@ -5,5 +5,7 @@ go:
 
 install: go install -v ./cmd/commerce-yt-api/
 
+script: go test -v ./cmd/commerce-yt-api/
+
 notifications:
   email: false
