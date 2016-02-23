@@ -3,9 +3,9 @@ language: go
 go:
   - 1.6
 
-install: go install -v ./cmd/commerce-yt-api/
+install: godep install -v ./cmd/commerce-yt-api/
 
-script: go test -v
+script: godep go test -v
 
 notifications:
   email: false
