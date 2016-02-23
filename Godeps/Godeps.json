@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/ocean/commerce-yt-api",
-	"GoVersion": "go1.5",
+	"GoVersion": "go1.6",
 	"Packages": [
 		"./cmd/commerce-yt-api/"
 	],
