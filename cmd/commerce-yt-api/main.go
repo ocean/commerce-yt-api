@@ -102,10 +102,27 @@ func main() {
 		}
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
-		// fmt.Printf("%s", body)
 
 		var htmlContentType = []string{"text/html; charset=utf-8"}
 		writeContentType(c.Writer, htmlContentType)
+		var out string = string(body[:])
+		c.String(http.StatusOK, out)
+	})
+
+	// SCALD_YOUTUBE_THUMBNAIL request
+	// https://i.ytimg.com
+	router.GET("/v1/thumbnail", func(c *gin.Context) {
+		q := c.Query("q")
+		log.Printf("query url = %s", q)
+		resp, err := http.Get(q)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+
+		var jpegContentType = []string{"image/jpeg"}
+		writeContentType(c.Writer, jpegContentType)
 		var out string = string(body[:])
 		c.String(http.StatusOK, out)
 	})
