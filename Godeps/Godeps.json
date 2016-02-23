@@ -23,6 +23,10 @@
 			"Rev": "b6d7b1396ec874c3b00f6c84cd4301a17c56c8ed"
 		},
 		{
+			"ImportPath": "github.com/stretchr/testify",
+			"Rev": "f390dcf405f7b83c997eac1b06768bb9f44dec18"
+		},
+		{
 			"ImportPath": "gopkg.in/go-playground/validator.v8",
 			"Comment": "v8.17",
 			"Rev": "f38559b4893a333e7122cf42155be352c9b5d7c6"
