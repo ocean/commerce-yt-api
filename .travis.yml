@@ -3,5 +3,7 @@ language: go
 go:
   - 1.6
 
+install: go install -v ./cmd/commerce-yt-api/
+
 notifications:
   email: false
