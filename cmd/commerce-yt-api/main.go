@@ -49,7 +49,7 @@ func main() {
 	// SCALD_YOUTUBE_API Search request
 	// https://www.googleapis.com/youtube/v3
 	// + /search?key=' . $api_key . '&q=' . $q . '&part=snippet&order=rating&type=video,playlist
-	router.GET("/search", func(c *gin.Context) {
+	router.GET("/v1/search", func(c *gin.Context) {
 		key := c.Query("key")
 		q := url.QueryEscape(c.Query("q"))
 		suffix := "&part=snippet&order=rating&type=video,playlist"
@@ -71,7 +71,7 @@ func main() {
 	// SCALD_YOUTUBE_API RSS Feed request
 	// https://www.googleapis.com/youtube/v3
 	// + /videos?id=' . $id . '&key=' . $api_key . '&part=snippet
-	router.GET("/videos", func(c *gin.Context) {
+	router.GET("/v1/videos", func(c *gin.Context) {
 		id := c.Query("id")
 		key := c.Query("key")
 		suffix := "&part=snippet"
@@ -93,7 +93,7 @@ func main() {
 	// SCALD_YOUTUBE_WEB request
 	// https://www.youtube.com/watch
 	// + /watch?v=' . $id
-	router.GET("/watch", func(c *gin.Context) {
+	router.GET("/v1/watch", func(c *gin.Context) {
 		id := c.Query("v")
 		log.Printf("video id = %s", id)
 		resp, err := http.Get("https://www.youtube.com/watch?v=" + id)
