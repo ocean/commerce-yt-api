@@ -121,13 +121,11 @@ func main() {
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
 
-		var jpegContentType = []string{"image/jpeg"}
-		writeContentType(c.Writer, jpegContentType)
-		var out string = string(body[:])
-		c.String(http.StatusOK, out)
+		// TODO: add in content type checking
+		c.Data(http.StatusOK, "image/jpeg", body)
 	})
 
-	// ----- MANY TEST THINGS
+	// ----- SOME TEST THINGS
 	router.GET("/form-submissions", func(c *gin.Context) {
 		resp, err := http.Get("http://forms.commerce.wa.gov.au/api/forms/results?token=ZuesbwqGhQMTxTbytbj7qrBWR_E84lTCSYLiVL1yk8Q")
 		if err != nil {
