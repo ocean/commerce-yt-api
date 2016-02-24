@@ -3,7 +3,9 @@ language: go
 go:
   - 1.6
 
-install: godep install -v ./cmd/commerce-yt-api/
+install:
+  - go get github.com/tools/godep
+  - godep install -v ./cmd/commerce-yt-api/
 
 script: godep go test -v
 
