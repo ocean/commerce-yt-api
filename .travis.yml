@@ -1,14 +1,14 @@
 language: go
-
 go:
-  - 1.6
-
+- 1.6
 install:
-  - go get github.com/tools/godep
-  - godep go install -v ./cmd/commerce-yt-api/
-  - godep get github.com/stretchr/testify
-
+- go get github.com/tools/godep
+- godep go install -v ./cmd/commerce-yt-api/
+- godep get github.com/stretchr/testify
 script: godep go test -v
-
 notifications:
   email: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: Z564QefZHe5s7qyUeyaJ1cN7wEjTD0vgj39WL3kRpZVaUSfN3dlKtyRVgsWbTdeGS7sW1b98UEClgW2xrvrFpz5rgLc1p9c6nbTAI7cYDXuwnyFiGecsGpyoNhOQYmU2DlZ3MFVT1QxhK83a3OmebeWXq5svw58ZCG3BeukZ7z6C5PliLkAtnUqJJK63cEoYgpd5l3XjZ0mEwWRNpDORpCKFeZZrLnyXTAn9Bfh79DDMirQTgdKbMOwZok276pIJBIvQbhg8Vn/dTYwTgLQYsgu/5kYP4XrzFNmFyaYrIPoUTNDpuwRspzD70TcF/joSltRtJAiaBLfyCCUV+FcVOt8c4so6dsO1ZI2JFK2G3O9TMadcXn9W1itX26/ubKlnViFMT9QETUEEhbiYYJqXSUnRlyKTL781QRiSAKOospvBQpODJW+CLeisPIo0XEhqHiMAQ1WsMwkkBGWSKuuFAaqBMtmrQQ3e3IwRdCb9rc/TGIBjQxE+hEdJPiuKbUaQiKB88htp2qDnZN2S6KGpXTKfVMJyBS6lQZMcKzD6T7/691ebscIV+P8xYEThyj0m0M7nWfSDa3CPeI9mNMDCZbGsGe0aZaIJINuaMVYlMnU8evG4HkKVz8jZH93/hfV1ulbUtkktdG/GgPW1wDvjoOgYHYyjS25dqumMlaJ7XeM=
