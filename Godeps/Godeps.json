@@ -2,7 +2,8 @@
 	"ImportPath": "github.com/ocean/commerce-yt-api",
 	"GoVersion": "go1.6",
 	"Packages": [
-		"./cmd/commerce-yt-api/"
+		"./cmd/commerce-yt-api/",
+		"./cmd/wakeup/"
 	],
 	"Deps": [
 		{
