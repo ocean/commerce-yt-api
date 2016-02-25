@@ -16,5 +16,5 @@ func main() {
     log.Fatal(err)
   }
   defer resp.Body.Close()
-  log.Printf("Status: %s Protocol: %s", resp.Status, resp.Proto)
+  log.Printf("Mmmf, what? Ok, waking up. Status: %s Protocol: %s", resp.Status, resp.Proto)
 }
