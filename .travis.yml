@@ -6,7 +6,7 @@ install:
 - godep go install -v ./cmd/commerce-yt-api/
 - go install -v ./cmd/wakeup/
 - godep get -v github.com/stretchr/testify
-script: go test -v ./cmd/commerce-yt-api/main_test.go
+script: go test -v ./cmd/commerce-yt-api/
 notifications:
   email: false
 deploy:

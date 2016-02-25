@@ -1,2 +1,3 @@
-# Ignore the test binary
-commerce-yt-api
+# Ignoring the test binary in the root directory also ignores the
+# directory name which contains it. Argh.
+# WTF, Git.
