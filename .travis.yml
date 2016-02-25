@@ -4,7 +4,7 @@ go:
 install:
 - go get -v github.com/tools/godep
 - godep go install -v ./cmd/commerce-yt-api/
-- godep go install -v ./cmd/wakeup/
+- go install -v ./cmd/wakeup/
 - godep get -v github.com/stretchr/testify
 script: go test -v ./cmd/commerce-yt-api/main_test.go
 notifications:
