@@ -1,13 +1,15 @@
 package main
 
 import (
-	"log"
-	"net/http"
-	"net/url"
 	"os"
 	"fmt"
-	"github.com/gin-gonic/gin"
+	"log"
+	"strings"
+	"net/url"
+	"net/http"
 	"io/ioutil"
+
+	"github.com/gin-gonic/gin"
 )
 
 var (
@@ -122,7 +124,13 @@ func main() {
 		body, err := ioutil.ReadAll(resp.Body)
 
 		// TODO: add in content type checking
-		c.Data(http.StatusOK, "image/jpeg", body)
+		if strings.HasSuffix(q, "jpg") {
+			c.Data(http.StatusOK, "image/jpeg", body)
+		} else if strings.HasSuffix(q, "png") {
+			c.Data(http.StatusOK, "image/png", body)
+		} else {
+			c.String(http.StatusForbidden, "403 Forbidden: Image requests only.")
+		}
 	})
 
 	// ----- SOME TEST THINGS
