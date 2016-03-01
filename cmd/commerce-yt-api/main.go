@@ -135,7 +135,11 @@ func main() {
 
 	// ----- SOME TEST THINGS
 	router.GET("/form-submissions", func(c *gin.Context) {
-		resp, err := http.Get("http://forms.commerce.wa.gov.au/api/forms/results?token=ZuesbwqGhQMTxTbytbj7qrBWR_E84lTCSYLiVL1yk8Q")
+		forms_api_token = os.Getenv("FORMS_API_TOKEN")
+		if forms_api_token == "" {
+			log.Fatal("$FORMS_API_TOKEN must be set")
+		}
+		resp, err := http.Get("http://forms.commerce.wa.gov.au/api/forms/results?token=" + forms_api_token)
 		if err != nil {
 			log.Fatal(err)
 		}
