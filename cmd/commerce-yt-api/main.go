@@ -135,7 +135,7 @@ func main() {
 
 	// ----- SOME TEST THINGS
 	router.GET("/form-submissions", func(c *gin.Context) {
-		forms_api_token = os.Getenv("FORMS_API_TOKEN")
+		forms_api_token := os.Getenv("FORMS_API_TOKEN")
 		if forms_api_token == "" {
 			log.Fatal("$FORMS_API_TOKEN must be set")
 		}
