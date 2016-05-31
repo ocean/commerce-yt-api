@@ -1,13 +1,13 @@
 package main
 
 import (
-	"os"
 	"fmt"
-	"log"
-	"strings"
-	"net/url"
-	"net/http"
 	"io/ioutil"
+	"log"
+	"net/http"
+	"net/url"
+	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,13 +31,13 @@ func main() {
 
 	router := gin.Default()
 
-  router.LoadHTMLGlob("templates/*")
-  router.GET("/", func(c *gin.Context) {
+	router.LoadHTMLGlob("templates/*")
+	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-      "title": "Hi there!",
-      "heading": "Welcome",
-      "content": "... to the API.",
-    })
+			"title":   "Hi there!",
+			"heading": "Welcome",
+			"content": "... to the API.",
+		})
 	})
 
 	router.GET("/ping", func(c *gin.Context) {
@@ -63,6 +63,9 @@ func main() {
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
 		// fmt.Printf("%s", body)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		var jsonContentType = []string{"application/json; charset=utf-8"}
 		writeContentType(c.Writer, jsonContentType)
@@ -85,6 +88,9 @@ func main() {
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
 		// fmt.Printf("%s", body)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		var jsonContentType = []string{"application/json; charset=utf-8"}
 		writeContentType(c.Writer, jsonContentType)
@@ -104,6 +110,9 @@ func main() {
 		}
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		var htmlContentType = []string{"text/html; charset=utf-8"}
 		writeContentType(c.Writer, htmlContentType)
@@ -122,6 +131,9 @@ func main() {
 		}
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		// TODO: add in content type checking
 		if strings.HasSuffix(q, "jpg") {
@@ -135,16 +147,19 @@ func main() {
 
 	// ----- SOME TEST THINGS
 	router.GET("/form-submissions", func(c *gin.Context) {
-		forms_api_token := os.Getenv("FORMS_API_TOKEN")
-		if forms_api_token == "" {
+		formsApiToken := os.Getenv("FORMS_API_TOKEN")
+		if formsApiToken == "" {
 			log.Fatal("$FORMS_API_TOKEN must be set")
 		}
-		resp, err := http.Get("http://forms.commerce.wa.gov.au/api/forms/results?token=" + forms_api_token)
+		resp, err := http.Get("http://forms.commerce.wa.gov.au/api/forms/results?token=" + formsApiToken)
 		if err != nil {
 			log.Fatal(err)
 		}
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		var jsonContentType = []string{"application/json; charset=utf-8"}
 		writeContentType(c.Writer, jsonContentType)
@@ -160,6 +175,9 @@ func main() {
 		}
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		// fmt.Printf("%s", body)
 
