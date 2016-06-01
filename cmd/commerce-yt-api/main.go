@@ -69,7 +69,7 @@ func main() {
 
 		var jsonContentType = []string{"application/json; charset=utf-8"}
 		writeContentType(c.Writer, jsonContentType)
-		var out string = string(body[:])
+		var out = string(body[:])
 		c.String(http.StatusOK, out)
 	})
 
@@ -94,7 +94,7 @@ func main() {
 
 		var jsonContentType = []string{"application/json; charset=utf-8"}
 		writeContentType(c.Writer, jsonContentType)
-		var out string = string(body[:])
+		var out = string(body[:])
 		c.String(http.StatusOK, out)
 	})
 
@@ -116,7 +116,7 @@ func main() {
 
 		var htmlContentType = []string{"text/html; charset=utf-8"}
 		writeContentType(c.Writer, htmlContentType)
-		var out string = string(body[:])
+		var out = string(body[:])
 		c.String(http.StatusOK, out)
 	})
 
@@ -147,11 +147,11 @@ func main() {
 
 	// ----- SOME TEST THINGS
 	router.GET("/form-submissions", func(c *gin.Context) {
-		formsApiToken := os.Getenv("FORMS_API_TOKEN")
-		if formsApiToken == "" {
+		formsAPIToken := os.Getenv("FORMS_API_TOKEN")
+		if formsAPIToken == "" {
 			log.Fatal("$FORMS_API_TOKEN must be set")
 		}
-		resp, err := http.Get("http://forms.commerce.wa.gov.au/api/forms/results?token=" + formsApiToken)
+		resp, err := http.Get("http://forms.commerce.wa.gov.au/api/forms/results?token=" + formsAPIToken)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -163,7 +163,7 @@ func main() {
 
 		var jsonContentType = []string{"application/json; charset=utf-8"}
 		writeContentType(c.Writer, jsonContentType)
-		var out string = string(body[:])
+		var out = string(body[:])
 		c.String(http.StatusOK, out)
 	})
 
@@ -183,7 +183,7 @@ func main() {
 
 		var jsonContentType = []string{"application/json; charset=utf-8"}
 		writeContentType(c.Writer, jsonContentType)
-		var out string = string(body[:])
+		var out = string(body[:])
 		c.String(http.StatusOK, out)
 	})
 
