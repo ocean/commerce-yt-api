@@ -107,7 +107,7 @@ func watchRequest(c echo.Context) error {
 // 		// c.Data(http.StatusOK, "image/jpeg", body)
 // 		c.Response().WriteHeader(http.StatusOK)
 // 		_, err = c.Response().Write(body)
-// 		// return c.JSONBlob(http.StatusOK, body)
+// 		return c.JSONBlob(http.StatusOK, body)
 // 	} else if strings.HasSuffix(q, "png") {
 // 		c.Response().Header().Set(echo.HeaderContentType, echo.ContentTypeByExtension(q))
 // 		// c.Data(http.StatusOK, "image/png", body)
