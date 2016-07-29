@@ -9,7 +9,7 @@ pipelines:
           - export GOPATH=$HOME/gopath
           - export PATH=$HOME/gopath/bin:$PATH
           - mkdir -p $HOME/gopath/src/github.com/ocean/commerce-yt-api
-          - cp -R $(pwd) $HOME/gopath/src/github.com/ocean/commerce-yt-api/
+          - cp -R $(pwd) $HOME/gopath/src/github.com/ocean/commerce-yt-api
           # - export BUILD_DIR=$HOME/gopath/src/github.com/ocean/commerce-yt-api
           - cd $HOME/gopath/src/github.com/ocean/commerce-yt-api
           - go env
