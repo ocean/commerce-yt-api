@@ -1,0 +1,14 @@
+# You can use a Docker image from Docker Hub or your own container registry
+image: golang:1.6
+   
+pipelines:
+  default:
+    - step:
+        script:
+          - echo "Installing dependencies..."
+          - go get -v github.com/tools/godep
+          - godep go install -v ./cmd/commerce-yt-api/
+          - go install -v ./cmd/wakeup/
+          - godep get -v github.com/stretchr/testify
+          - echo "Running tests..."
+          - go test -v ./cmd/commerce-yt-api/
