@@ -5,6 +5,8 @@ pipelines:
   default:
     - step:
         script:
+          - ls -al
+          - export GOPATH=$(pwd)
           - echo "Installing dependencies..."
           - go get -v github.com/tools/godep
           - godep go install -v ./cmd/commerce-yt-api/
