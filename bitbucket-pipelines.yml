@@ -14,8 +14,8 @@ pipelines:
           # - export BUILD_DIR=$HOME/gopath/src/github.com/ocean/commerce-yt-api
           - cd $HOME/gopath/src/github.com/ocean/commerce-yt-api
           - echo "Installing dependencies..."
-          - go get -v github.com/tools/godep
-          - godep go install -v ./cmd/commerce-yt-api/
+          - pwd && go get -v github.com/tools/godep
+          - pwd && godep go install -v ./cmd/commerce-yt-api/
           - go install -v ./cmd/wakeup/
           - godep get -v github.com/stretchr/testify
           - echo "Running tests..."
