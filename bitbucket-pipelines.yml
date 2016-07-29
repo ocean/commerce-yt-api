@@ -10,10 +10,9 @@ pipelines:
           - export PATH=$HOME/gopath/bin:$PATH
           - env
           - mkdir -p $HOME/gopath/src/github.com/ocean/commerce-yt-api
-          - rsync -az $(pwd)/ $HOME/gopath/src/github.com/ocean/commerce-yt-api/
-          # - export TRAVIS_BUILD_DIR=$HOME/gopath/src/github.com/ocean/commerce-yt-api
+          - cp -R $(pwd)/ $HOME/gopath/src/github.com/ocean/commerce-yt-api/
+          # - export BUILD_DIR=$HOME/gopath/src/github.com/ocean/commerce-yt-api
           - cd $HOME/gopath/src/github.com/ocean/commerce-yt-api
-          # - export GOPATH=$(pwd)
           - echo "Installing dependencies..."
           - go get -v github.com/tools/godep
           - godep go install -v ./cmd/commerce-yt-api/
