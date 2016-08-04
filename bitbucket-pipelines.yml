@@ -1,0 +1,24 @@
+# You can use a Docker image from Docker Hub or your own container registry
+image: golang:1.6
+   
+pipelines:
+  default:
+    - step:
+        script:
+          - ls -al
+          - export GOPATH=$HOME/gopath
+          - export PATH=$HOME/gopath/bin:$PATH
+          - mkdir -p $HOME/gopath/src/github.com/ocean/commerce-yt-api
+          - cp -v -R . $HOME/gopath/src/github.com/ocean/commerce-yt-api
+          # - export BUILD_DIR=$HOME/gopath/src/github.com/ocean/commerce-yt-api
+          - cd $HOME/gopath/src/github.com/ocean/commerce-yt-api
+          - go env
+          - env
+          - echo "Installing dependencies..."
+          - pwd && go get -v github.com/tools/godep
+          - ls -al
+          - pwd && godep go install -v ./cmd/commerce-yt-api/
+          - go install -v ./cmd/wakeup/
+          - godep get -v github.com/stretchr/testify
+          - echo "Running tests..."
+          - go test -v ./cmd/commerce-yt-api/
