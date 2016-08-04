@@ -139,6 +139,9 @@ func main() {
 		})
 	})
 
+	// Serve the damn favicon.ico
+	router.StaticFile("/favicon.ico", "./public/favicon.ico")
+
 	// Return ping requests with a nice timestamp.
 	router.GET("/ping", func(c *gin.Context) {
 		var resp struct {
