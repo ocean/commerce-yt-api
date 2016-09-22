@@ -36,7 +36,7 @@ func TestHomePage(t *testing.T)  {
 	}
 
 	Convey("When you hit the root URL", t, func() {
-		Convey("The result should contain Welcome", t, func() {
+		Convey("The result should contain Welcome", func() {
 			So(req, ShouldContainSubstring, "Welcome")
 		})
 	})
