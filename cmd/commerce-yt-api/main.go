@@ -107,6 +107,17 @@ func thumbnailRequest(c *gin.Context) {
 	}
 }
 
+// Return ping requests with a nice timestamp.
+func ping(c *gin.Context) {
+	var resp struct {
+		Response  string    `json:"response"`
+		Timestamp time.Time `json:"timestamp"`
+	}
+	resp.Response = "pong"
+	resp.Timestamp = time.Now().Local()
+	c.JSON(http.StatusOK, resp)
+}
+
 // Set up required variables
 var (
 	port = 5000
@@ -143,15 +154,17 @@ func main() {
 	router.StaticFile("/favicon.ico", "./public/favicon.ico")
 
 	// Return ping requests with a nice timestamp.
-	router.GET("/ping", func(c *gin.Context) {
-		var resp struct {
-			Response  string    `json:"response"`
-			Timestamp time.Time `json:"timestamp"`
-		}
-		resp.Response = "pong"
-		resp.Timestamp = time.Now().Local()
-		c.JSON(http.StatusOK, resp)
-	})
+	// router.GET("/ping", func(c *gin.Context) {
+	// 	var resp struct {
+	// 		Response  string    `json:"response"`
+	// 		Timestamp time.Time `json:"timestamp"`
+	// 	}
+	// 	resp.Response = "pong"
+	// 	resp.Timestamp = time.Now().Local()
+	// 	c.JSON(http.StatusOK, resp)
+	// })
+
+	router.GET("/ping", ping)
 
 	// ----- ACTUAL REAL THINGS
 
