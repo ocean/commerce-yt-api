@@ -118,6 +118,16 @@ func ping(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// Simple front page, using a template for fun.
+// router.LoadHTMLGlob("templates/*")
+func home(c *gin.Context) {
+	c.HTML(http.StatusOK, "index.tmpl", gin.H{
+		"title":   "Hi there!",
+		"heading": "Welcome",
+		"content": "... to the API.",
+	})
+}
+
 // Set up required variables
 var (
 	port = 5000
@@ -140,30 +150,23 @@ func main() {
 	// Call in the gin router
 	router := gin.Default()
 
-	// Simple front page, using a template for fun.
-	router.LoadHTMLGlob("templates/*")
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"title":   "Hi there!",
-			"heading": "Welcome",
-			"content": "... to the API.",
-		})
-	})
-
 	// Serve the damn favicon.ico
 	router.StaticFile("/favicon.ico", "./public/favicon.ico")
 
-	// Return ping requests with a nice timestamp.
-	// router.GET("/ping", func(c *gin.Context) {
-	// 	var resp struct {
-	// 		Response  string    `json:"response"`
-	// 		Timestamp time.Time `json:"timestamp"`
-	// 	}
-	// 	resp.Response = "pong"
-	// 	resp.Timestamp = time.Now().Local()
-	// 	c.JSON(http.StatusOK, resp)
+	// Simple front page, using a template for fun.
+	router.LoadHTMLGlob("templates/*")
+	// router.GET("/", func(c *gin.Context) {
+	// 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
+	// 		"title":   "Hi there!",
+	// 		"heading": "Welcome",
+	// 		"content": "... to the API.",
+	// 	})
 	// })
 
+	// Simple front page, using a template for fun.
+	router.GET("/", home)
+
+	// Return ping requests with a nice timestamp.
 	router.GET("/ping", ping)
 
 	// ----- ACTUAL REAL THINGS
