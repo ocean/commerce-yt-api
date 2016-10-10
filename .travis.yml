@@ -4,10 +4,10 @@ go:
 install:
 - go get -v github.com/tools/godep
 # - godep go install -v ./cmd/commerce-yt-api/
-# - go install -v ./cmd/wakeup/
+# - godep go install -v ./cmd/wakeup/
 # - godep get -v github.com/stretchr/testify
 # - go get -v github.com/smartystreets/goconvey/convey
-- go get -v github.com/golang/protobuf/proto
+# - go get -v github.com/golang/protobuf/proto
 - godep go install -v ./...
 script: godep go test -v ./cmd/commerce-yt-api/
 notifications:
