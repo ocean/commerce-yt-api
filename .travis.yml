@@ -8,7 +8,7 @@ install:
 # - godep get -v github.com/stretchr/testify
 # - go get -v github.com/smartystreets/goconvey/convey
 - go get -v github.com/golang/protobuf/proto
-- godep go install -t -v ./...
+- godep go install -v ./...
 script: godep go test -v ./cmd/commerce-yt-api/
 notifications:
   email: false
