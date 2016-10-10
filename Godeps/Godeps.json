@@ -1,13 +1,57 @@
 {
 	"ImportPath": "github.com/ocean/commerce-yt-api",
 	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
 	"Packages": [
-		"./cmd/commerce-yt-api/",
-		"./cmd/wakeup/"
+		"./..."
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/dustin/go-broadcast",
+			"Rev": "3bdf6d4a7164a50bc19d5f230e2981d87d2584f1"
+		},
+		{
 			"ImportPath": "github.com/gin-gonic/gin",
+			"Comment": "v1.0rc1-219-g3d002e3",
+			"Rev": "3d002e382355cafc15d706b92899b1961d5b79e9"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/binding",
+			"Comment": "v1.0rc1-219-g3d002e3",
+			"Rev": "3d002e382355cafc15d706b92899b1961d5b79e9"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/binding/example",
+			"Comment": "v1.0rc1-219-g3d002e3",
+			"Rev": "3d002e382355cafc15d706b92899b1961d5b79e9"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/examples/app-engine",
+			"Comment": "v1.0rc1-219-g3d002e3",
+			"Rev": "3d002e382355cafc15d706b92899b1961d5b79e9"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/examples/basic",
+			"Comment": "v1.0rc1-219-g3d002e3",
+			"Rev": "3d002e382355cafc15d706b92899b1961d5b79e9"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/examples/realtime-advanced",
+			"Comment": "v1.0rc1-219-g3d002e3",
+			"Rev": "3d002e382355cafc15d706b92899b1961d5b79e9"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/examples/realtime-chat",
+			"Comment": "v1.0rc1-219-g3d002e3",
+			"Rev": "3d002e382355cafc15d706b92899b1961d5b79e9"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/ginS",
+			"Comment": "v1.0rc1-219-g3d002e3",
+			"Rev": "3d002e382355cafc15d706b92899b1961d5b79e9"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/render",
 			"Comment": "v1.0rc1-219-g3d002e3",
 			"Rev": "3d002e382355cafc15d706b92899b1961d5b79e9"
 		},
@@ -16,19 +60,127 @@
 			"Rev": "127091107ff5f822298f1faa7487ffcf578adcf6"
 		},
 		{
+			"ImportPath": "github.com/golang/protobuf/proto/proto3_proto",
+			"Rev": "127091107ff5f822298f1faa7487ffcf578adcf6"
+		},
+		{
+			"ImportPath": "github.com/gopherjs/gopherjs/js",
+			"Rev": "00f306e07eaaaab04ea5dba605cd0e1eff9c6fb7"
+		},
+		{
+			"ImportPath": "github.com/jtolds/gls",
+			"Comment": "v4.2.0",
+			"Rev": "8ddce2a84170772b95dd5d576c48d517b22cac63"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo",
+			"Comment": "v2.0.2-4-g08e08a0",
+			"Rev": "08e08a00eaae3f081530dc25686e2febfe408952"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/engine",
+			"Comment": "v2.0.2-4-g08e08a0",
+			"Rev": "08e08a00eaae3f081530dc25686e2febfe408952"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/engine/standard",
+			"Comment": "v2.0.2-4-g08e08a0",
+			"Rev": "08e08a00eaae3f081530dc25686e2febfe408952"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/log",
+			"Comment": "v2.0.2-4-g08e08a0",
+			"Rev": "08e08a00eaae3f081530dc25686e2febfe408952"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/color",
+			"Comment": "v0.0.3-54-g722aa12",
+			"Rev": "722aa12d41c236ce78ff48eac1cafe0107ecdc9d"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/log",
+			"Comment": "v0.0.3-54-g722aa12",
+			"Rev": "722aa12d41c236ce78ff48eac1cafe0107ecdc9d"
+		},
+		{
 			"ImportPath": "github.com/manucorporat/sse",
 			"Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
+		},
+		{
+			"ImportPath": "github.com/manucorporat/stats",
+			"Rev": "8f2d6ace262eba462e9beb552382c98be51d807b"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Rev": "9cbef7c35391cca05f15f8181dc0b18bc9736dbb"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Rev": "56b76bdf51f7708750eac80fa38b952bb9f32639"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/assertions",
+			"Comment": "1.6.0-10-g2063fd1",
+			"Rev": "2063fd1cc7c975db70502811a34b06ad034ccdf2"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/assertions/internal/go-render/render",
+			"Comment": "1.6.0-10-g2063fd1",
+			"Rev": "2063fd1cc7c975db70502811a34b06ad034ccdf2"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/assertions/internal/oglematchers",
+			"Comment": "1.6.0-10-g2063fd1",
+			"Rev": "2063fd1cc7c975db70502811a34b06ad034ccdf2"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey",
+			"Comment": "1.6.2-6-g5db88ed",
+			"Rev": "5db88ed452e937f2fd557de6f4f1af7f2eabed0b"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey/gotest",
+			"Comment": "1.6.2-6-g5db88ed",
+			"Rev": "5db88ed452e937f2fd557de6f4f1af7f2eabed0b"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey/reporting",
+			"Comment": "1.6.2-6-g5db88ed",
+			"Rev": "5db88ed452e937f2fd557de6f4f1af7f2eabed0b"
+		},
+		{
+			"ImportPath": "github.com/valyala/fasttemplate",
+			"Rev": "3b874956e03f1636d171bda64b130f9135f42cff"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
 			"Rev": "b6d7b1396ec874c3b00f6c84cd4301a17c56c8ed"
 		},
 		{
-			"ImportPath": "github.com/stretchr/testify",
-			"Rev": "f390dcf405f7b83c997eac1b06768bb9f44dec18"
+			"ImportPath": "golang.org/x/net/context/ctxhttp",
+			"Rev": "b6d7b1396ec874c3b00f6c84cd4301a17c56c8ed"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "8d1157a435470616f975ff9bb013bea8d0962067"
 		},
 		{
 			"ImportPath": "gopkg.in/go-playground/validator.v8",
+			"Comment": "v8.17",
+			"Rev": "f38559b4893a333e7122cf42155be352c9b5d7c6"
+		},
+		{
+			"ImportPath": "gopkg.in/go-playground/validator.v8/examples/custom",
+			"Comment": "v8.17",
+			"Rev": "f38559b4893a333e7122cf42155be352c9b5d7c6"
+		},
+		{
+			"ImportPath": "gopkg.in/go-playground/validator.v8/examples/simple",
+			"Comment": "v8.17",
+			"Rev": "f38559b4893a333e7122cf42155be352c9b5d7c6"
+		},
+		{
+			"ImportPath": "gopkg.in/go-playground/validator.v8/examples/struct-level",
 			"Comment": "v8.17",
 			"Rev": "f38559b4893a333e7122cf42155be352c9b5d7c6"
 		}
