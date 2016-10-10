@@ -7,7 +7,7 @@ install:
 # - go install -v ./cmd/wakeup/
 # - godep get -v github.com/stretchr/testify
 # - go get -v github.com/smartystreets/goconvey/convey
-- godep go install -v ./...
+- godep go install -t -v ./...
 script: godep go test -v ./cmd/commerce-yt-api/
 notifications:
   email: false
