@@ -17,8 +17,6 @@ pipelines:
           - echo "Installing dependencies..."
           - pwd && go get -v github.com/tools/godep
           - ls -al
-          - pwd && godep go install -v ./cmd/commerce-yt-api/
-          - go install -v ./cmd/wakeup/
-          - godep get -v github.com/stretchr/testify
+          - pwd && godep go install -v ./...
           - echo "Running tests..."
-          - go test -v ./cmd/commerce-yt-api/
+          - godep go test -v ./cmd/commerce-yt-api/
