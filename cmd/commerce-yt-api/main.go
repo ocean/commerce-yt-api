@@ -119,7 +119,6 @@ func ping(c *gin.Context) {
 }
 
 // Simple front page, using a template for fun.
-// router.LoadHTMLGlob("templates/*")
 func home(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
 		"title":   "Hi there!",
@@ -155,15 +154,6 @@ func main() {
 
 	// Simple front page, using a template for fun.
 	router.LoadHTMLGlob("templates/*")
-	// router.GET("/", func(c *gin.Context) {
-	// 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
-	// 		"title":   "Hi there!",
-	// 		"heading": "Welcome",
-	// 		"content": "... to the API.",
-	// 	})
-	// })
-
-	// Simple front page, using a template for fun.
 	router.GET("/", home)
 
 	// Return ping requests with a nice timestamp.
