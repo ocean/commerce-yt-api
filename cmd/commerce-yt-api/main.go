@@ -1,3 +1,8 @@
+/*
+Package main implements an API for proxying YouTube API requests.
+Endpoints mirror their YouTube counterparts as much as possible,
+so as little change as possible is required in the client (Drupal) codebase.
+*/
 package main
 
 import (
@@ -13,7 +18,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// SCALD_YOUTUBE_API Search request
+// searchRequest
+//
+// Simple search request, used for the SCALD_YOUTUBE_API Search request endpoint.
 // https://www.googleapis.com/youtube/v3
 // + /search?key=' . $api_key . '&q=' . $q . '&part=snippet&order=rating&type=video,playlist
 func searchRequest(c *gin.Context) {
@@ -37,7 +44,9 @@ func searchRequest(c *gin.Context) {
 	c.String(http.StatusOK, out)
 }
 
-// SCALD_YOUTUBE_API RSS Feed request
+// rssFeedRequest
+//
+// RSS feed request, used for the SCALD_YOUTUBE_API RSS Feed request endpoint.
 // https://www.googleapis.com/youtube/v3
 // + /videos?id=' . $id . '&key=' . $api_key . '&part=snippet
 func rssFeedRequest(c *gin.Context) {
@@ -61,7 +70,9 @@ func rssFeedRequest(c *gin.Context) {
 	c.String(http.StatusOK, out)
 }
 
-// SCALD_YOUTUBE_WEB request
+// watchRequest
+//
+// Used for the SCALD_YOUTUBE_WEB request endpoint.
 // https://www.youtube.com/watch
 // + /watch?v=' . $id
 func watchRequest(c *gin.Context) {
@@ -82,7 +93,9 @@ func watchRequest(c *gin.Context) {
 	c.String(http.StatusOK, out)
 }
 
-// SCALD_YOUTUBE_THUMBNAIL request
+// thumbnailRequest
+//
+// Used for the SCALD_YOUTUBE_THUMBNAIL request endpoint.
 // https://i.ytimg.com
 func thumbnailRequest(c *gin.Context) {
 	q := c.Query("q")
@@ -107,6 +120,8 @@ func thumbnailRequest(c *gin.Context) {
 	}
 }
 
+// ping
+//
 // Return ping requests with a nice timestamp.
 func ping(c *gin.Context) {
 	var resp struct {
@@ -118,6 +133,8 @@ func ping(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// home
+//
 // Simple front page, using a template for fun.
 func home(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
