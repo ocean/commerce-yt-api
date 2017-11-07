@@ -32,6 +32,6 @@
 
 [metadata.heroku]
   root-package = "github.com/ocean/commerce-yt-api"
-  go-version= "1.9"
+  go-version= "go1.9"
   install = [ "./cmd/..." ]
   ensure = "true"
