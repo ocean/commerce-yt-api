@@ -29,3 +29,9 @@
 
 [[constraint]]
   name = "github.com/smartystreets/goconvey"
+
+[metadata.heroku]
+  root-package = "github.com/ocean/commerce-yt-api"
+  go-version= "1.9.2"
+  install = [ "./cmd/..." ]
+  ensure = "true"
