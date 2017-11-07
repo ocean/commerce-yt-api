@@ -1,12 +1,17 @@
 language: go
+
 go:
-- 1.7
+- 1.9
+
 install:
-- go get -v github.com/tools/godep
-- godep go install -v ./...
-script: godep go test -v ./cmd/commerce-yt-api/
+- go install -v github.com/golang/dep/cmd/dep
+- dep ensure
+
+script: go test -v ./cmd/commerce-yt-api/
+
 notifications:
   email: false
+
 deploy:
   provider: heroku
   api_key:

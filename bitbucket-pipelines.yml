@@ -15,8 +15,8 @@ pipelines:
           - go env
           - env
           - echo "Installing dependencies..."
-          - pwd && go get -v github.com/tools/godep
+          - pwd && go install -v github.com/golang/dep/cmd/dep
           - ls -al
-          - pwd && godep go install -v ./...
+          - pwd && dep ensure
           - echo "Running tests..."
-          - godep go test -v ./cmd/commerce-yt-api/
+          - go test -v ./cmd/commerce-yt-api/

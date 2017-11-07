@@ -7,19 +7,27 @@ package gin
 import (
 	"fmt"
 	"io"
+	"os"
 	"time"
+
+	"github.com/mattn/go-isatty"
 )
 
 var (
-	green   = string([]byte{27, 91, 57, 55, 59, 52, 50, 109})
-	white   = string([]byte{27, 91, 57, 48, 59, 52, 55, 109})
-	yellow  = string([]byte{27, 91, 57, 55, 59, 52, 51, 109})
-	red     = string([]byte{27, 91, 57, 55, 59, 52, 49, 109})
-	blue    = string([]byte{27, 91, 57, 55, 59, 52, 52, 109})
-	magenta = string([]byte{27, 91, 57, 55, 59, 52, 53, 109})
-	cyan    = string([]byte{27, 91, 57, 55, 59, 52, 54, 109})
-	reset   = string([]byte{27, 91, 48, 109})
+	green        = string([]byte{27, 91, 57, 55, 59, 52, 50, 109})
+	white        = string([]byte{27, 91, 57, 48, 59, 52, 55, 109})
+	yellow       = string([]byte{27, 91, 57, 55, 59, 52, 51, 109})
+	red          = string([]byte{27, 91, 57, 55, 59, 52, 49, 109})
+	blue         = string([]byte{27, 91, 57, 55, 59, 52, 52, 109})
+	magenta      = string([]byte{27, 91, 57, 55, 59, 52, 53, 109})
+	cyan         = string([]byte{27, 91, 57, 55, 59, 52, 54, 109})
+	reset        = string([]byte{27, 91, 48, 109})
+	disableColor = false
 )
+
+func DisableConsoleColor() {
+	disableColor = true
+}
 
 func ErrorLogger() HandlerFunc {
 	return ErrorLoggerT(ErrorTypeAny)
@@ -28,25 +36,30 @@ func ErrorLogger() HandlerFunc {
 func ErrorLoggerT(typ ErrorType) HandlerFunc {
 	return func(c *Context) {
 		c.Next()
-		// avoid writting if we already wrote into the response body
-		if !c.Writer.Written() {
-			errors := c.Errors.ByType(typ)
-			if len(errors) > 0 {
-				c.JSON(-1, errors)
-			}
+		errors := c.Errors.ByType(typ)
+		if len(errors) > 0 {
+			c.JSON(-1, errors)
 		}
 	}
 }
 
-// Instances a Logger middleware that will write the logs to gin.DefaultWriter
+// Logger instances a Logger middleware that will write the logs to gin.DefaultWriter
 // By default gin.DefaultWriter = os.Stdout
 func Logger() HandlerFunc {
 	return LoggerWithWriter(DefaultWriter)
 }
 
-// Instance a Logger middleware with the specified writter buffer.
+// LoggerWithWriter instance a Logger middleware with the specified writter buffer.
 // Example: os.Stdout, a file opened in write mode, a socket...
 func LoggerWithWriter(out io.Writer, notlogged ...string) HandlerFunc {
+	isTerm := true
+
+	if w, ok := out.(*os.File); !ok ||
+		(os.Getenv("TERM") == "dumb" || (!isatty.IsTerminal(w.Fd()) && !isatty.IsCygwinTerminal(w.Fd()))) ||
+		disableColor {
+		isTerm = false
+	}
+
 	var skip map[string]struct{}
 
 	if length := len(notlogged); length > 0 {
@@ -74,16 +87,19 @@ func LoggerWithWriter(out io.Writer, notlogged ...string) HandlerFunc {
 			clientIP := c.ClientIP()
 			method := c.Request.Method
 			statusCode := c.Writer.Status()
-			statusColor := colorForStatus(statusCode)
-			methodColor := colorForMethod(method)
+			var statusColor, methodColor string
+			if isTerm {
+				statusColor = colorForStatus(statusCode)
+				methodColor = colorForMethod(method)
+			}
 			comment := c.Errors.ByType(ErrorTypePrivate).String()
 
-			fmt.Fprintf(out, "[GIN] %v |%s %3d %s| %13v | %s |%s  %s %-7s %s\n%s",
+			fmt.Fprintf(out, "[GIN] %v |%s %3d %s| %13v | %15s |%s  %s %-7s %s\n%s",
 				end.Format("2006/01/02 - 15:04:05"),
 				statusColor, statusCode, reset,
 				latency,
 				clientIP,
-				methodColor, reset, method,
+				methodColor, method, reset,
 				path,
 				comment,
 			)

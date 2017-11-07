@@ -14,11 +14,12 @@ import (
 	"github.com/gin-gonic/gin/render"
 )
 
-// Framework's version
-const Version = "v1.0rc2"
+// Version is Framework's version
+const Version = "v1.2"
 
 var default404Body = []byte("404 page not found")
 var default405Body = []byte("405 method not allowed")
+var defaultAppEngine bool
 
 type HandlerFunc func(*Context)
 type HandlersChain []HandlerFunc
@@ -44,7 +45,9 @@ type (
 	// Create an instance of Engine, by using New() or Default()
 	Engine struct {
 		RouterGroup
+		delims      render.Delims
 		HTMLRender  render.HTMLRender
+		FuncMap     template.FuncMap
 		allNoRoute  HandlersChain
 		allNoMethod HandlersChain
 		noRoute     HandlersChain
@@ -78,6 +81,17 @@ type (
 		// handler.
 		HandleMethodNotAllowed bool
 		ForwardedByClientIP    bool
+
+		// #726 #755 If enabled, it will thrust some headers starting with
+		// 'X-AppEngine...' for better integration with that PaaS.
+		AppEngine bool
+
+		// If enabled, the url.RawPath will be used to find parameters.
+		UseRawPath bool
+		// If true, the path value will be unescaped.
+		// If UseRawPath is false (by default), the UnescapePathValues effectively is true,
+		// as url.Path gonna be used, which is already unescaped.
+		UnescapePathValues bool
 	}
 )
 
@@ -89,6 +103,8 @@ var _ IRouter = &Engine{}
 // - RedirectFixedPath:      false
 // - HandleMethodNotAllowed: false
 // - ForwardedByClientIP:    true
+// - UseRawPath:             false
+// - UnescapePathValues:     true
 func New() *Engine {
 	debugPrintWARNINGNew()
 	engine := &Engine{
@@ -97,11 +113,16 @@ func New() *Engine {
 			basePath: "/",
 			root:     true,
 		},
+		FuncMap:                template.FuncMap{},
 		RedirectTrailingSlash:  true,
 		RedirectFixedPath:      false,
 		HandleMethodNotAllowed: false,
 		ForwardedByClientIP:    true,
+		AppEngine:              defaultAppEngine,
+		UseRawPath:             false,
+		UnescapePathValues:     true,
 		trees:                  make(methodTrees, 0, 9),
+		delims:                 render.Delims{"{{", "}}"},
 	}
 	engine.RouterGroup.engine = engine
 	engine.pool.New = func() interface{} {
@@ -121,21 +142,26 @@ func (engine *Engine) allocateContext() *Context {
 	return &Context{engine: engine}
 }
 
+func (engine *Engine) Delims(left, right string) *Engine {
+	engine.delims = render.Delims{left, right}
+	return engine
+}
+
 func (engine *Engine) LoadHTMLGlob(pattern string) {
 	if IsDebugging() {
-		debugPrintLoadTemplate(template.Must(template.ParseGlob(pattern)))
-		engine.HTMLRender = render.HTMLDebug{Glob: pattern}
+		debugPrintLoadTemplate(template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern)))
+		engine.HTMLRender = render.HTMLDebug{Glob: pattern, FuncMap: engine.FuncMap, Delims: engine.delims}
 	} else {
-		templ := template.Must(template.ParseGlob(pattern))
+		templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseGlob(pattern))
 		engine.SetHTMLTemplate(templ)
 	}
 }
 
 func (engine *Engine) LoadHTMLFiles(files ...string) {
 	if IsDebugging() {
-		engine.HTMLRender = render.HTMLDebug{Files: files}
+		engine.HTMLRender = render.HTMLDebug{Files: files, FuncMap: engine.FuncMap, Delims: engine.delims}
 	} else {
-		templ := template.Must(template.ParseFiles(files...))
+		templ := template.Must(template.New("").Delims(engine.delims.Left, engine.delims.Right).Funcs(engine.FuncMap).ParseFiles(files...))
 		engine.SetHTMLTemplate(templ)
 	}
 }
@@ -144,22 +170,27 @@ func (engine *Engine) SetHTMLTemplate(templ *template.Template) {
 	if len(engine.trees) > 0 {
 		debugPrintWARNINGSetHTMLTemplate()
 	}
-	engine.HTMLRender = render.HTMLProduction{Template: templ}
+
+	engine.HTMLRender = render.HTMLProduction{Template: templ.Funcs(engine.FuncMap)}
 }
 
-// Adds handlers for NoRoute. It return a 404 code by default.
+func (engine *Engine) SetFuncMap(funcMap template.FuncMap) {
+	engine.FuncMap = funcMap
+}
+
+// NoRoute adds handlers for NoRoute. It return a 404 code by default.
 func (engine *Engine) NoRoute(handlers ...HandlerFunc) {
 	engine.noRoute = handlers
 	engine.rebuild404Handlers()
 }
 
-// Sets the handlers called when... TODO
+// NoMethod sets the handlers called when... TODO
 func (engine *Engine) NoMethod(handlers ...HandlerFunc) {
 	engine.noMethod = handlers
 	engine.rebuild405Handlers()
 }
 
-// Attachs a global middleware to the router. ie. the middleware attached though Use() will be
+// Use attachs a global middleware to the router. ie. the middleware attached though Use() will be
 // included in the handlers chain for every single request. Even 404, 405, static files...
 // For example, this is the right place for a logger or error management middleware.
 func (engine *Engine) Use(middleware ...HandlerFunc) IRoutes {
@@ -267,9 +298,26 @@ func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	engine.pool.Put(c)
 }
 
+// Re-enter a context that has been rewritten.
+// This can be done by setting c.Request.Path to your new target.
+// Disclaimer: You can loop yourself to death with this, use wisely.
+func (engine *Engine) HandleContext(c *Context) {
+	c.reset()
+	engine.handleHTTPRequest(c)
+	engine.pool.Put(c)
+}
+
 func (engine *Engine) handleHTTPRequest(context *Context) {
 	httpMethod := context.Request.Method
-	path := context.Request.URL.Path
+	var path string
+	var unescape bool
+	if engine.UseRawPath && len(context.Request.URL.RawPath) > 0 {
+		path = context.Request.URL.RawPath
+		unescape = engine.UnescapePathValues
+	} else {
+		path = context.Request.URL.Path
+		unescape = false
+	}
 
 	// Find root of the tree for the given HTTP method
 	t := engine.trees
@@ -277,15 +325,15 @@ func (engine *Engine) handleHTTPRequest(context *Context) {
 		if t[i].method == httpMethod {
 			root := t[i].root
 			// Find route in tree
-			handlers, params, tsr := root.getValue(path, context.Params)
+			handlers, params, tsr := root.getValue(path, context.Params, unescape)
 			if handlers != nil {
 				context.handlers = handlers
 				context.Params = params
 				context.Next()
 				context.writermem.WriteHeaderNow()
 				return
-
-			} else if httpMethod != "CONNECT" && path != "/" {
+			}
+			if httpMethod != "CONNECT" && path != "/" {
 				if tsr && engine.RedirectTrailingSlash {
 					redirectTrailingSlash(context)
 					return
@@ -302,7 +350,7 @@ func (engine *Engine) handleHTTPRequest(context *Context) {
 	if engine.HandleMethodNotAllowed {
 		for _, tree := range engine.trees {
 			if tree.method != httpMethod {
-				if handlers, _, _ := tree.root.getValue(path, nil); handlers != nil {
+				if handlers, _, _ := tree.root.getValue(path, nil, unescape); handlers != nil {
 					context.handlers = engine.allNoMethod
 					serveError(context, 405, default405Body)
 					return

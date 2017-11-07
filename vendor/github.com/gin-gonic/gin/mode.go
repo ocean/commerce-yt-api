@@ -19,9 +19,9 @@ const (
 	TestMode    string = "test"
 )
 const (
-	debugCode   = iota
-	releaseCode = iota
-	testCode    = iota
+	debugCode = iota
+	releaseCode
+	testCode
 )
 
 // DefaultWriter is the default io.Writer used the Gin for debug output and
@@ -34,8 +34,8 @@ const (
 var DefaultWriter io.Writer = os.Stdout
 var DefaultErrorWriter io.Writer = os.Stderr
 
-var ginMode int = debugCode
-var modeName string = DebugMode
+var ginMode = debugCode
+var modeName = DebugMode
 
 func init() {
 	mode := os.Getenv(ENV_GIN_MODE)
